@@ -1,0 +1,9 @@
+azureml-core==1.16.0.post1
+numpy==1.18.5
+pandas==1.0.5
+pip==20.1.1
+psutil==5.7.0
+scikit-learn==0.23.1
+seaborn==0.10.1
+ujson==1.35
+urllib3==1.25.9
