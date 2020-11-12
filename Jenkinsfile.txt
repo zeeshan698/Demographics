@@ -15,12 +15,17 @@ pipeline {
                        sh"""
                        python3.8 -m pip install --user --upgrade pip
                        python3.8 -m pip install --user -r requirements.txt 
-                       python3.8 ./drug_demographic_2-Copy1.py
                        """
                     } 
             }
         }
         
+        stage('ML Train and Deploy') {
+            steps{
+               sh 'python3.8 ./drug_demographic_2-Copy1.py'
+               
+            }
+        }
               
                 
             
