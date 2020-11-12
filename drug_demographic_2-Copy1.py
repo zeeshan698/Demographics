@@ -237,40 +237,6 @@ print(model.url)
 
 
 #get_ipython().run_cell_magic('writefile', 'score.py', "\nimport json\nimport sys\nimport joblib\n\nfrom azureml.core.model import Model\nimport numpy as np\n\ndef init():\n\n    global path\n    model_path = Model.get_model_path('demodrug')\n    model = joblib.load(model_path)\n\ndef run(raw_data):\n    try:\n        data = json.loads(raw_data)['data']\n        data = numpy.array(data)\n        result  = model.predict(data)\n        return result.tolist()\n    except Exception as e:\n        result = str(e)\n        return error")
-%%writefile score.py
-
- 
-
-import json
-import sys
-import joblib
-
- 
-
-from azureml.core.model import Model
-import numpy as np
-
- 
-
-def init():
-
- 
-
-    global path
-    model_path = Model.get_model_path('demodrug')
-    model = joblib.load(model_path)
-
- 
-
-def run(raw_data):
-    try:
-        data = json.loads(raw_data)['data']
-        data = numpy.array(data)
-        result  = model.predict(data)
-        return result.tolist()
-    except Exception as e:
-        result = str(e)
-        return error
 
 # # Describe your environment
 # Each modelling process may require a unique set of packages. Therefore we need to create a dependency file providing instructions to AML on how to contstruct a docker image that can support the models and any other objects required for inferencing. In the following cell, we create a environment dependency file, myenv.yml that specifies which libraries are needed by the scoring script. You can create this file manually, or use the CondaDependencies class to create it for you.
