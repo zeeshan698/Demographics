@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        
+        stage('SCM') {
+            steps{
+               git url: 'https://github.com/vicky-devops/Demographics.git',
+
+            }
+        }
+        stage('Installing Dependencies') {
+            steps {
+                 sh 'python3.8 -m pip install --upgrade pip'
+                 sh '/usr/local/bin/python3.8 -m pip install --upgrade pip'
+                 sh 'python3.8 -m pip install -r requirements.txt'
+            }
+        }
+        
+        stage('ML Modal train deploy') {
+            steps {
+              
+                sh 'python3.8 drug_demographic_2-Copy1.py'
+            }
+        }
+    }
+    
+}
