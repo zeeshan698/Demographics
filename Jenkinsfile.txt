@@ -11,9 +11,11 @@ pipeline {
         }
         stage('Installing Dependencies') {
             steps {
-                 sh 'python3.8 -m pip install --upgrade pip'
-                 sh '/usr/local/bin/python3.8 -m pip install --upgrade pip'
-                 sh 'python3.8 -m pip install -r requirements.txt'
+                    withEnv(["HOME=${env.WORKSPACE}"]) {
+                       sh 'python3.8 -m pip install --user --upgrade pip'
+                       
+                       sh 'python3.8 -m pip install --user -r requirements.txt'
+                    } 
             }
         }
         
