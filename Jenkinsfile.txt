@@ -5,7 +5,7 @@ pipeline {
         
         stage('SCM') {
             steps{
-               git url: 'https://github.com/vicky-devops/Demographics.git',
+               git url: 'https://github.com/vicky-devops/Demographics.git'
 
             }
         }
