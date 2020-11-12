@@ -309,7 +309,7 @@ service.wait_for_deployment(show_output = True)
 # In[34]:
 
 
-service_name = 'ddshi'
+service_name = 'ddshi1'
 service = Webservice(name = service_name, workspace = ws)
 print(service.get_logs())
 print(service.state)
