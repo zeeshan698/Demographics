@@ -294,7 +294,7 @@ deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb 
 # Define the model, inference, & deployment configuration and web service name and location to deploy
 service = Model.deploy(
     workspace = ws,
-    name = "ddshi",
+    name = "ddshi1",
     models = [model],
     inference_config = inference_config,
     deployment_config = deployment_config)
