@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
 # In[1]:
@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from sklearn import ensemble
 from matplotlib import pyplot as plt
-#os.chdir('/Users/sriramsridhargavs/Desktop/Projects/')
+
 
 
 # In[3]:
@@ -144,6 +144,19 @@ from azureml.core import Workspace, Run
 from azureml.core.compute import ComputeTarget, AmlCompute
 from azureml.core.compute_target import ComputeTargetException
 
+## Vicky-11122020 12:28 am - start
+from azureml.core.authentication import ServicePrincipalAuthentication
+
+sp = ServicePrincipalAuthentication(tenant_id="028ed00f-46df-46cf-94f0-5f8df8cdb573", # tenant id
+                                    service_principal_id="d3fcaa84-bc7c-4256-be87-aaba7925cc3a", # clientId
+                                    service_principal_password="hUkgKX4rdRKuDzY4LUniyMnV_vQL-rNr4r") # clientSecret
+from azureml.core import Workspace
+
+ws = Workspace.get(name="POC-test2",
+                   auth=sp,
+                   subscription_id="d2a0e00c-84e7-40a7-96ce-4c730e4f85f7")
+
+## Vicky-11122020 12:28 am - end
 
 # # Load  and testing model
 
@@ -161,14 +174,14 @@ print(y)
 # In[23]:
 
 
-from azureml.core import Workspace
+# from azureml.core import Workspace
 
-ws = Workspace.create(name='POC-test2',
-                    subscription_id='d2a0e00c-84e7-40a7-96ce-4c730e4f85f7', 
-                    resource_group ='ResourceGp-ZS',
-                    create_resource_group=False,
-                    location='westus2' 
-                   )
+#ws = Workspace.create(name='POC-test2',
+#                    subscription_id='d2a0e00c-84e7-40a7-96ce-4c730e4f85f7', 
+#                    resource_group ='ResourceGp-ZS',
+#                    create_resource_group=False,
+#                    location='westus2' 
+#                   )
 
 
 # # If workspace is already created , directly run below code
@@ -223,8 +236,41 @@ print(model.url)
 # In[27]:
 
 
-get_ipython().run_cell_magic('writefile', 'score.py', "\nimport json\nimport sys\nimport joblib\n\nfrom azureml.core.model import Model\nimport numpy as np\n\ndef init():\n\n    global path\n    model_path = Model.get_model_path('demodrug')\n    model = joblib.load(model_path)\n\ndef run(raw_data):\n    try:\n        data = json.loads(raw_data)['data']\n        data = numpy.array(data)\n        result  = model.predict(data)\n        return result.tolist()\n    except Exception as e:\n        result = str(e)\n        return error")
+#get_ipython().run_cell_magic('writefile', 'score.py', "\nimport json\nimport sys\nimport joblib\n\nfrom azureml.core.model import Model\nimport numpy as np\n\ndef init():\n\n    global path\n    model_path = Model.get_model_path('demodrug')\n    model = joblib.load(model_path)\n\ndef run(raw_data):\n    try:\n        data = json.loads(raw_data)['data']\n        data = numpy.array(data)\n        result  = model.predict(data)\n        return result.tolist()\n    except Exception as e:\n        result = str(e)\n        return error")
+%%writefile score.py
 
+ 
+
+import json
+import sys
+import joblib
+
+ 
+
+from azureml.core.model import Model
+import numpy as np
+
+ 
+
+def init():
+
+ 
+
+    global path
+    model_path = Model.get_model_path('demodrug')
+    model = joblib.load(model_path)
+
+ 
+
+def run(raw_data):
+    try:
+        data = json.loads(raw_data)['data']
+        data = numpy.array(data)
+        result  = model.predict(data)
+        return result.tolist()
+    except Exception as e:
+        result = str(e)
+        return error
 
 # # Describe your environment
 # Each modelling process may require a unique set of packages. Therefore we need to create a dependency file providing instructions to AML on how to contstruct a docker image that can support the models and any other objects required for inferencing. In the following cell, we create a environment dependency file, myenv.yml that specifies which libraries are needed by the scoring script. You can create this file manually, or use the CondaDependencies class to create it for you.

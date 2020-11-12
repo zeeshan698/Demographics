@@ -9,22 +9,19 @@ pipeline {
 
             }
         }
-        stage('Installing Dependencies') {
+        stage('Dependencies & ML train - Deploy') {
             steps {
                     withEnv(["HOME=${env.WORKSPACE}"]) {
-                       sh 'python3.8 -m pip install --user --upgrade pip'
-                       
-                       sh 'python3.8 -m pip install --user -r requirements.txt'
+                       sh"""
+                       python3.8 -m pip install --user --upgrade pip
+                       python3.8 -m pip install --user -r requirements.txt 
+                       python3.8 ./drug_demographic_2-Copy1.py
+                       """
                     } 
             }
         }
         
-        stage('ML Modal train deploy') {
-            steps {
-              
-                sh 'python3.8 drug_demographic_2-Copy1.py'
-            }
-        }
+        
     }
     
 }
