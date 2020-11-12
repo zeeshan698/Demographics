@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from sklearn import ensemble
 from matplotlib import pyplot as plt
-#os.chdir('/Users/sriramsridhargavs/Desktop/Projects/')
+
 
 
 # In[3]:
@@ -144,6 +144,19 @@ from azureml.core import Workspace, Run
 from azureml.core.compute import ComputeTarget, AmlCompute
 from azureml.core.compute_target import ComputeTargetException
 
+## Vicky-11122020 12:28 am - start
+from azureml.core.authentication import ServicePrincipalAuthentication
+
+sp = ServicePrincipalAuthentication(tenant_id="028ed00f-46df-46cf-94f0-5f8df8cdb573", # tenant id
+                                    service_principal_id="d3fcaa84-bc7c-4256-be87-aaba7925cc3a", # clientId
+                                    service_principal_password="hUkgKX4rdRKuDzY4LUniyMnV_vQL-rNr4r") # clientSecret
+from azureml.core import Workspace
+
+ws = Workspace.get(name="POC-test2",
+                   auth=sp,
+                   subscription_id="d2a0e00c-84e7-40a7-96ce-4c730e4f85f7")
+
+## Vicky-11122020 12:28 am - end
 
 # # Load  and testing model
 
@@ -161,14 +174,14 @@ print(y)
 # In[23]:
 
 
-from azureml.core import Workspace
+# from azureml.core import Workspace
 
-ws = Workspace.create(name='POC-test2',
-                    subscription_id='d2a0e00c-84e7-40a7-96ce-4c730e4f85f7', 
-                    resource_group ='ResourceGp-ZS',
-                    create_resource_group=False,
-                    location='westus2' 
-                   )
+#ws = Workspace.create(name='POC-test2',
+#                    subscription_id='d2a0e00c-84e7-40a7-96ce-4c730e4f85f7', 
+#                    resource_group ='ResourceGp-ZS',
+#                    create_resource_group=False,
+#                    location='westus2' 
+#                   )
 
 
 # # If workspace is already created , directly run below code
