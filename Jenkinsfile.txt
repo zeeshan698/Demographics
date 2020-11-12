@@ -22,7 +22,7 @@ pipeline {
         stage('ML Modal train deploy') {
             steps {
               
-                sh 'python3.8 drug_demographic_2-Copy1.py'
+                sh 'python3.8 ./drug_demographic_2-Copy1.py'
             }
         }
     }
