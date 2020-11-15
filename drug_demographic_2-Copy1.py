@@ -147,14 +147,14 @@ from azureml.core.compute_target import ComputeTargetException
 ## Vicky-11122020 12:28 am - start
 from azureml.core.authentication import ServicePrincipalAuthentication
 
-sp = ServicePrincipalAuthentication(tenant_id="028ed00f-46df-46cf-94f0-5f8df8cdb573", # tenant id
-                                    service_principal_id="d3fcaa84-bc7c-4256-be87-aaba7925cc3a", # clientId
-                                    service_principal_password="hUkgKX4rdRKuDzY4LUniyMnV_vQL-rNr4r") # clientSecret
+sp = ServicePrincipalAuthentication(tenant_id="b2ef2cdf-362a-48ec-8c76-321b322ed859", # tenant id
+                                    service_principal_id="88226988-d739-4044-afb1-62220d8f507d", # clientId
+                                    service_principal_password="s2MeaVDdTqlikvQlf3X0.WP7-T3WIZEDmF") # clientSecret
 from azureml.core import Workspace
 
-ws = Workspace.get(name="POC-test2",
+ws = Workspace.get(name="GAVS-ML-SPACE",
                    auth=sp,
-                   subscription_id="d2a0e00c-84e7-40a7-96ce-4c730e4f85f7")
+                   subscription_id="758d9519-6a50-420c-a094-611f42144a79")
 
 ## Vicky-11122020 12:28 am - end
 
