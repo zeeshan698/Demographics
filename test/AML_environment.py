@@ -1,26 +1,23 @@
 from azureml.core import Workspace
 import os, json, sys
 import azureml.core
-from azureml.core.authentication import AzureCliAuthentication
+from azureml.core.authentication import ServicePrincipalAuthentication
 
 print("SDK Version:", azureml.core.VERSION)
 # print('current dir is ' +os.curdir)
-with open("aml_config/config.json") as f:
-    config = json.load(f)
 
-workspace_name = config["GAVS-ML-SPACE"]
-resource_group = config["ResourceGp-VK"]
-subscription_id = config["758d9519-6a50-420c-a094-611f42144a79"]
-location = config["Central US"]
+workspace_name = 'GAVS-ML-SPACE'
+resource_group = 'ResourceGp-VK'
+subscription_id = '758d9519-6a50-420c-a094-611f42144a79'
+location = 'westus2'
 
-cli_auth = AzureCliAuthentication()
 
 try:
 ws = Workspace.get(
         name=workspace_name,
 subscription_id=subscription_id,
 resource_group=resource_group,
-        auth=cli_auth,
+        auth=sp,
     )
 
 except:
@@ -32,7 +29,7 @@ subscription_id=subscription_id,
 resource_group=resource_group,
         # create_resource_group=True,
         location=location,
-        auth=cli_auth,
+        auth=sp,
     )
 
 # print Workspace details
