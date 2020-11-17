@@ -13,21 +13,21 @@ location = 'westus2'
 
 
 try:
-ws = Workspace.get(
+   ws = Workspace.get(
         name=workspace_name,
-subscription_id=subscription_id,
-resource_group=resource_group,
+        subscription_id=subscription_id,
+        resource_group=resource_group,
         auth=sp,
     )
 
 except:
     # this call might take a minute or two.
-print("Creating new workspace")
-ws = Workspace.create(
+    print("Creating new workspace")
+    ws = Workspace.create(
         name=workspace_name,
-subscription_id=subscription_id,
-resource_group=resource_group,
-        # create_resource_group=True,
+        subscription_id=subscription_id,
+        resource_group=resource_group,
+    # create_resource_group=True,
         location=location,
         auth=sp,
     )
