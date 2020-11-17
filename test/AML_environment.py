@@ -11,6 +11,9 @@ resource_group = 'ResourceGp-VK'
 subscription_id = '758d9519-6a50-420c-a094-611f42144a79'
 location = 'westus2'
 
+sp = ServicePrincipalAuthentication(tenant_id="b2ef2cdf-362a-48ec-8c76-321b322ed859", 
+                                    service_principal_id="88226988-d739-4044-afb1-62220d8f507d", 
+                                    service_principal_password="s2MeaVDdTqlikvQlf3X0.WP7-T3WIZEDmF") 
 
 try:
    ws = Workspace.get(
