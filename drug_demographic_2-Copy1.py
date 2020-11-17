@@ -147,14 +147,14 @@ from azureml.core.compute_target import ComputeTargetException
 ## Vicky-11122020 12:28 am - start
 from azureml.core.authentication import ServicePrincipalAuthentication
 
-sp = ServicePrincipalAuthentication(tenant_id="028ed00f-46df-46cf-94f0-5f8df8cdb573", # tenant id
-                                    service_principal_id="d3fcaa84-bc7c-4256-be87-aaba7925cc3a", # clientId
-                                    service_principal_password="hUkgKX4rdRKuDzY4LUniyMnV_vQL-rNr4r") # clientSecret
+sp = ServicePrincipalAuthentication(tenant_id="b2ef2cdf-362a-48ec-8c76-321b322ed859", # tenant id
+                                    service_principal_id="88226988-d739-4044-afb1-62220d8f507d", # clientId
+                                    service_principal_password="s2MeaVDdTqlikvQlf3X0.WP7-T3WIZEDmF") # clientSecret
 from azureml.core import Workspace
 
-ws = Workspace.get(name="POC-test2",
+ws = Workspace.get(name="GAVS-ML-SPACE",
                    auth=sp,
-                   subscription_id="d2a0e00c-84e7-40a7-96ce-4c730e4f85f7")
+                   subscription_id="758d9519-6a50-420c-a094-611f42144a79")
 
 ## Vicky-11122020 12:28 am - end
 
@@ -237,40 +237,6 @@ print(model.url)
 
 
 #get_ipython().run_cell_magic('writefile', 'score.py', "\nimport json\nimport sys\nimport joblib\n\nfrom azureml.core.model import Model\nimport numpy as np\n\ndef init():\n\n    global path\n    model_path = Model.get_model_path('demodrug')\n    model = joblib.load(model_path)\n\ndef run(raw_data):\n    try:\n        data = json.loads(raw_data)['data']\n        data = numpy.array(data)\n        result  = model.predict(data)\n        return result.tolist()\n    except Exception as e:\n        result = str(e)\n        return error")
-%%writefile score.py
-
- 
-
-import json
-import sys
-import joblib
-
- 
-
-from azureml.core.model import Model
-import numpy as np
-
- 
-
-def init():
-
- 
-
-    global path
-    model_path = Model.get_model_path('demodrug')
-    model = joblib.load(model_path)
-
- 
-
-def run(raw_data):
-    try:
-        data = json.loads(raw_data)['data']
-        data = numpy.array(data)
-        result  = model.predict(data)
-        return result.tolist()
-    except Exception as e:
-        result = str(e)
-        return error
 
 # # Describe your environment
 # Each modelling process may require a unique set of packages. Therefore we need to create a dependency file providing instructions to AML on how to contstruct a docker image that can support the models and any other objects required for inferencing. In the following cell, we create a environment dependency file, myenv.yml that specifies which libraries are needed by the scoring script. You can create this file manually, or use the CondaDependencies class to create it for you.
@@ -328,7 +294,7 @@ deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb 
 # Define the model, inference, & deployment configuration and web service name and location to deploy
 service = Model.deploy(
     workspace = ws,
-    name = "ddshi",
+    name = "ddshi1",
     models = [model],
     inference_config = inference_config,
     deployment_config = deployment_config)
@@ -343,7 +309,7 @@ service.wait_for_deployment(show_output = True)
 # In[34]:
 
 
-service_name = 'ddshi'
+service_name = 'ddshi1'
 service = Webservice(name = service_name, workspace = ws)
 print(service.get_logs())
 print(service.state)
