@@ -9,6 +9,17 @@ pipeline {
 
             }
         }
+        
+        stage('Unit Testing') {
+            steps {
+                 sh """
+                 python3.8 -m pip install --user --upgrade pip'
+                 python3.8 -m pip install pytest mock codecov pydocstyle pytest-cov pylint pylint_junit
+                 python3.8 -m pip install -r requirements.txt
+                 python3.8 -m pytest -v src/my_custom_package/test/ --doctest-modules --junitxml=unit-testresults.xml --cov=src/my_custom_package/ --cov-append --cov-report=xml:coverage.xml --cov-report=html:htmlcov
+                 """
+            }
+        }
         stage('Dependencies & ML train - Deploy') {
             steps {
                     withEnv(["HOME=${env.WORKSPACE}"]) {
