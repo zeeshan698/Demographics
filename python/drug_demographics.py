@@ -380,7 +380,7 @@ else:
 
      endpoint.update_version(version_name=endpoint.versions["version1"].name,
                        description="updated version",
-                       model = [model]                                     
+                       models = [model]                                     
      )
      # Wait for the process to complete before deleting
      endpoint.wait_for_deployment(show_output= True)
