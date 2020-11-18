@@ -291,32 +291,51 @@ inference_config = InferenceConfig(entry_script="score.py", environment = env)
 # Set deployment configuration
 deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb = 1)
 
-# Define the model, inference, & deployment configuration and web service name and location to deploy
-service = Model.deploy(
-    workspace = ws,
-    name = "ddshi1",
-    models = [model],
-    inference_config = inference_config,
-    deployment_config = deployment_config)
+# check if exists - update or create 
+DEPLOYMENT_SERVICE_NAME = "GetDemographics"
+webservices = ws.webservices.keys()
+if DEPLOYMENT_SERVICE_NAME not in webservices:
+     # Define the model, inference, & deployment configuration and web service name and location to deploy
+     service = Model.deploy(
+     workspace = ws,
+     name = DEPLOYMENT_SERVICE_NAME,
+     models = [model],
+     inference_config = inference_config,
+     deployment_config = deployment_config)
+     
+     service.wait_for_deployment(show_output=True)
+     print(service.state)
+     print(service.scoring_uri)
+     print(service.get_logs())   
+
+else:
+    service = Webservice(
+                  name=DEPLOYMENT_SERVICE_NAME,
+                  workspace=ws
+    )
+    service.update(models=[model], inference_config=inference_config)
+    print(service.state)
+    print(service.scoring_uri)
+    print(service.get_logs())
 
 
 # In[33]:
 
 
-service.wait_for_deployment(show_output = True)
+#service.wait_for_deployment(show_output = True)
 
 
 # In[34]:
 
 
-service_name = 'ddshi1'
-service = Webservice(name = service_name, workspace = ws)
-print(service.get_logs())
-print(service.state)
+#service_name = 'ddshi1'
+#service = Webservice(name = service_name, workspace = ws)
+#print(service.get_logs())
+#print(service.state)
 
 
 # In[35]:
 
 
-print(service.scoring_uri)
+#print(service.scoring_uri)
 
