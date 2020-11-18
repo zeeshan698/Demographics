@@ -292,7 +292,7 @@ inference_config = InferenceConfig(entry_script="python/score.py", environment =
 deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb = 1)
 
 # check if exists - update or create 
-DEPLOYMENT_SERVICE_NAME = "GetDemographics"
+DEPLOYMENT_SERVICE_NAME = "get-dgraphics-restlink"
 webservices = ws.webservices.keys()
 if DEPLOYMENT_SERVICE_NAME not in webservices:
      # Define the model, inference, & deployment configuration and web service name and location to deploy
