@@ -104,7 +104,7 @@ plt.show()
 # In[13]:
 print("  ")
 print("Model fitting")
-Print("Using Decision Tree Classifier")
+print("Using Decision Tree Classifier")
 print("  ")
 decisiontree = tree.DecisionTreeClassifier(random_state = 123, max_depth = 4)
 model = decisiontree.fit(X_train, y_train)
