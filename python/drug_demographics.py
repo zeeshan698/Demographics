@@ -369,7 +369,7 @@ if AKS_DELOYMENT_SERVICE_NAME not in webservices:
 else:
      print(" ")
      print("**************************************")
-     print("AKS Service existing, updating the service: TODO")
+     print("AKS Service existing, updating the service")
      print(" ")
      print("**************************************")
      endpoint = AksEndpoint(
