@@ -1,4 +1,3 @@
-
 import json
 import sys
 import joblib
@@ -8,16 +7,15 @@ import numpy as np
 
 def init():
 
-    global path
-    model_path = Model.get_model_path('demodrug')
+    global model
+model_path = Model.get_model_path('demodrug')
     model = joblib.load(model_path)
 
 def run(raw_data):
     try:
-        data = json.loads(raw_data)['data']
-        data = numpy.array(data)
-        result  = model.predict(data)
+        data = np.array(json.loads(raw_data)['data']).astype('float32')
+result  =model.predict(np.array([data]))
         return result.tolist()
     except Exception as e:
         result = str(e)
-        return error
+        return result
