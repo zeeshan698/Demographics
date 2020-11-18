@@ -292,8 +292,9 @@ inference_config = InferenceConfig(entry_script="python/score.py", environment =
 deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb = 1)
 # ACI deployment***************************************************************************************
 # check if exists - update or create 
-DEPLOYMENT_SERVICE_NAME = "get-dgraphics-restlink"
+DEPLOYMENT_SERVICE_NAME = "aci-dgraphics1"
 webservices = ws.webservices.keys()
+
 if DEPLOYMENT_SERVICE_NAME not in webservices:
      # Define the model, inference, & deployment configuration and web service name and location to deploy
      print(" ")
@@ -337,7 +338,7 @@ from azureml.core.compute import AksCompute
 from azureml.core.compute import ComputeTarget
 
 print("AKS deployement ")
-AKS_DELOYMENT_SERVICE_NAME = "get-aks-dgraphics-restlink"
+AKS_DELOYMENT_SERVICE_NAME = "aks-dgraphics1"
 AML_AKS_COMPUTE_NAME = "aks-amlcompute"
 aks_target = ComputeTarget(ws,AML_AKS_COMPUTE_NAME)
 namespace_name = "default"
@@ -359,15 +360,27 @@ if AKS_DELOYMENT_SERVICE_NAME not in webservices:
    
      # create the deployment and define the scoring traffic percentile for the first deployment
      # deploy the model and endpoint
-     service =  Model.deploy(ws, endpoint_name, [model], inference_config, endpoint_deployment_config, aks_target)
+     endpoint =  Model.deploy(ws, endpoint_name, [model], inference_config, endpoint_deployment_config, aks_target)
 
      # Wait for he process to complete
-     service.wait_for_deployment(show_output = True)
-     print(service.state)
-     print(service.get_logs())
+     endpoint.wait_for_deployment(show_output = True)
+     print(endpoint.state)
+     print(endpoint.get_logs())
 else:
      print(" ")
      print("**************************************")
      print("AKS Service existing, updating the service: TODO")
      print(" ")
      print("**************************************")
+     endpoint = AksEndpoint(
+                    workspace=ws
+                    name=AKS_DEPLOYMENT_SERVICE_NAME,
+                  
+     )
+
+     endpoint.update_version(version_name=endpoint.versions["versionb1].name,
+                       description="updated version",
+                       model = [model]                                     
+     )
+     # Wait for the process to complete before deleting
+     endpoint.wait_for_deployment(show_output= True)
