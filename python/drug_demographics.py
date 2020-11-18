@@ -12,13 +12,27 @@ from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from sklearn import ensemble
 from matplotlib import pyplot as plt
-
-
+from azure.datalake.store import core, lib
+import uuid, sys
+from azure.storage.filedatalake import DataLakeServiceClient
+from azure.core._match_conditions import MatchConditions
+from azure.storage.filedatalake._models import ContentSettings
+from azure.common.credentials import ServicePrincipalCredentials
 
 # In[3]:
+token = lib.auth(tenant_id = 'b2ef2cdf-362a-48ec-8c76-321b322ed859', 
+                 client_secret = 's2MeaVDdTqlikvQlf3X0.WP7-T3WIZEDmF', 
+                 client_id = '88226988-d739-4044-afb1-62220d8f507d')
 
+# Create an ADLS File System Client. The store_name is the name of your ADLS account
+#adl = core.AzureDLFileSystem(token, store_name='datalakedrugdemo')
+adlsFileSystemClient = core.AzureDLFileSystem(token, store_name='demodatalakenw')
+adlsFileSystemClient.ls()
 
-mydata = pd.read_csv('mydat_2.csv')
+with adlsFileSystemClient.open('mydat_2.csv', 'rb') as f:
+    mydata = pd.read_csv(f) 
+
+#mydata = pd.read_csv('mydat_2.csv')
 
 
 # In[4]:
