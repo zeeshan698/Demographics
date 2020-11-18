@@ -290,21 +290,24 @@ inference_config = InferenceConfig(entry_script="python/score.py", environment =
 
 # Set deployment configuration
 deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb = 1)
-
+# ACI deployment***************************************************************************************
 # check if exists - update or create 
 DEPLOYMENT_SERVICE_NAME = "get-dgraphics-restlink"
 webservices = ws.webservices.keys()
 if DEPLOYMENT_SERVICE_NAME not in webservices:
      # Define the model, inference, & deployment configuration and web service name and location to deploy
      print(" ")
-     print("********")
+     print("**************************************")
      print("Service is new, Creating the service")
+     print(" ")
+     print("**************************************")
+
      service = Model.deploy(
-        workspace = ws,
-        name = DEPLOYMENT_SERVICE_NAME,
-        models = [model],
-        inference_config = inference_config,
-        deployment_config = deployment_config)
+         workspace = ws,
+         name = DEPLOYMENT_SERVICE_NAME,
+         models = [model],
+         inference_config = inference_config,
+         deployment_config = deployment_config)
      
      service.wait_for_deployment(show_output=True)
      print(service.state)
@@ -313,8 +316,11 @@ if DEPLOYMENT_SERVICE_NAME not in webservices:
 
 else:
     print(" ")
-    print("********")
+    print("**************************************")
     print("Existing Service, updating the service")
+    print(" ")
+    print("**************************************")
+    
     service = Webservice(
                   name=DEPLOYMENT_SERVICE_NAME,
                   workspace=ws
@@ -324,24 +330,40 @@ else:
     print(service.scoring_uri)
     print(service.get_logs())
 
+# AKS deployment ****************************************************************************************
+from azureml.core.webservice import AksWebservice, Webservice
+print("AKS deployement ")
+AKS_DELOYMENT_SERVICE_NAME = "get-aks-dgraphics-restlink"
+AML_AKS_COMPUTE_NAME = "aks-amlcompute"
+aks_target = AksCompute(ws,AML_AKS_COMPUTE_NAME)
+namespace_name = "default"
+endpoint_name = AKS_DELOYMENT_SERVICE_NAME
+version_name = "version1"
 
-# In[33]:
+endpoint_deployment_config = AksEndpoint.deploy_configuration(cpu_cores = 0.1, memory_gb = 0.2,
+                                                         enable_app_insights = True,
+                                                         tags = {'sckitlearn':'demo'},
+                                                         description = "gavs poc test version",
+                                                         version_name = version_name,
+                                                         traffic_percentile = 20)
+if AKS_DELOYMENT_SERVICE_NAME not in webservices:
+     print(" ")
+     print("**************************************")
+     print("AKS Service is new, Creating the service")
+     print(" ")
+     print("**************************************")
+   
+     # create the deployment and define the scoring traffic percentile for the first deployment
+     # deploy the model and endpoint
+     service =  Model.deploy(ws, endpoint_name, [model], inference_config, endpoint_deployment_config, aks_target)
 
-
-#service.wait_for_deployment(show_output = True)
-
-
-# In[34]:
-
-
-#service_name = 'ddshi1'
-#service = Webservice(name = service_name, workspace = ws)
-#print(service.get_logs())
-#print(service.state)
-
-
-# In[35]:
-
-
-#print(service.scoring_uri)
-
+     # Wait for he process to complete
+     service.wait_for_deployment(show_output = True)
+     print(service.state)
+     print(service.get_logs())
+else:
+     print(" ")
+     print("**************************************")
+     print("AKS Service existing, updating the service: TODO")
+     print(" ")
+     print("**************************************")
