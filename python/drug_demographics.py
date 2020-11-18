@@ -296,12 +296,15 @@ DEPLOYMENT_SERVICE_NAME = "get-dgraphics-restlink"
 webservices = ws.webservices.keys()
 if DEPLOYMENT_SERVICE_NAME not in webservices:
      # Define the model, inference, & deployment configuration and web service name and location to deploy
+     print(" ")
+     print("********")
+     print("Service is new, Creating the service")
      service = Model.deploy(
-     workspace = ws,
-     name = DEPLOYMENT_SERVICE_NAME,
-     models = [model],
-     inference_config = inference_config,
-     deployment_config = deployment_config)
+        workspace = ws,
+        name = DEPLOYMENT_SERVICE_NAME,
+        models = [model],
+        inference_config = inference_config,
+        deployment_config = deployment_config)
      
      service.wait_for_deployment(show_output=True)
      print(service.state)
@@ -309,6 +312,9 @@ if DEPLOYMENT_SERVICE_NAME not in webservices:
      print(service.get_logs())   
 
 else:
+    print(" ")
+    print("********")
+    print("Existing Service, updating the service")
     service = Webservice(
                   name=DEPLOYMENT_SERVICE_NAME,
                   workspace=ws
