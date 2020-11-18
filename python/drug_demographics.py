@@ -286,7 +286,7 @@ from azureml.core.webservice import AciWebservice, Webservice
 #model = run.register_model(model_name = "mymodel", model_path = "outputs/model.pkl")
 
 # Combine scoring script & environment in Inference configuration
-inference_config = InferenceConfig(entry_script="score.py", environment = env)
+inference_config = InferenceConfig(entry_script="python/score.py", environment = env)
 
 # Set deployment configuration
 deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb = 1)
