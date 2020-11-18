@@ -50,7 +50,7 @@ mydata.info()
 
 
 mydata.shape
-mydata.head(10)
+print(mydata.head(10))
 
 
 # In[8]:
@@ -102,8 +102,10 @@ plt.show()
 # # Train the model
 
 # In[13]:
-
-
+print("  ")
+print("Model fitting")
+Print("Using Decision Tree Classifier")
+print("  ")
 decisiontree = tree.DecisionTreeClassifier(random_state = 123, max_depth = 4)
 model = decisiontree.fit(X_train, y_train)
 
@@ -146,7 +148,7 @@ import joblib
 
 filename = 'demodrug.pkl'
 joblib.dump(decisiontree,filename)
-
+print("Saving the model to pkl file....... ")
 
 # # Below steps involves AML Services
 
@@ -232,7 +234,7 @@ print(y)
 
 # In[25]:
 
-
+print(" Registering the model ")
 from azureml.core.model import Model
 model = Model.register(model_path = "demodrug.pkl",
                        model_name = "demodrug",
