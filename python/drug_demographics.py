@@ -19,6 +19,9 @@ from azure.core._match_conditions import MatchConditions
 from azure.storage.filedatalake._models import ContentSettings
 from azure.common.credentials import ServicePrincipalCredentials
 
+print("   ")
+print("Connecting to DataLake Datastore in Azure Cloud ...............")
+print("   ")
 # In[3]:
 token = lib.auth(tenant_id = 'b2ef2cdf-362a-48ec-8c76-321b322ed859', 
                  client_secret = 's2MeaVDdTqlikvQlf3X0.WP7-T3WIZEDmF', 
@@ -27,6 +30,8 @@ token = lib.auth(tenant_id = 'b2ef2cdf-362a-48ec-8c76-321b322ed859',
 # Create an ADLS File System Client. The store_name is the name of your ADLS account
 #adl = core.AzureDLFileSystem(token, store_name='datalakedrugdemo')
 adlsFileSystemClient = core.AzureDLFileSystem(token, store_name='demodatalakenw')
+print("Contents of DataLake Folder ...................................")
+print("          ")
 adlsFileSystemClient.ls()
 
 with adlsFileSystemClient.open('mydat_2.csv', 'rb') as f:
@@ -45,6 +50,7 @@ mydata.info()
 
 
 mydata.shape
+mydata.head(10)
 
 
 # In[8]:
@@ -306,7 +312,7 @@ inference_config = InferenceConfig(entry_script="python/score.py", environment =
 deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb = 1)
 # ACI deployment***************************************************************************************
 # check if exists - update or create 
-DEPLOYMENT_SERVICE_NAME = "aci-dgraphics1"
+DEPLOYMENT_SERVICE_NAME = "aci-sdeter1"
 webservices = ws.webservices.keys()
 
 if DEPLOYMENT_SERVICE_NAME not in webservices:
@@ -352,7 +358,7 @@ from azureml.core.compute import AksCompute
 from azureml.core.compute import ComputeTarget
 
 print("AKS deployement ")
-AKS_DELOYMENT_SERVICE_NAME = "aks-dgraphics1"
+AKS_DELOYMENT_SERVICE_NAME = "aks-sdeter1"
 AML_AKS_COMPUTE_NAME = "aks-amlcompute"
 aks_target = ComputeTarget(ws,AML_AKS_COMPUTE_NAME)
 namespace_name = "default"
@@ -388,7 +394,7 @@ else:
      print("**************************************")
      endpoint = AksEndpoint(
                     workspace=ws,
-                    name="aks-dgraphics1",
+                    name="aks-sdeter1",
                   
      )
 
