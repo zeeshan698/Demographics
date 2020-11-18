@@ -32,7 +32,7 @@ token = lib.auth(tenant_id = 'b2ef2cdf-362a-48ec-8c76-321b322ed859',
 adlsFileSystemClient = core.AzureDLFileSystem(token, store_name='demodatalakenw')
 print("Contents of DataLake Folder ...................................")
 print("          ")
-adlsFileSystemClient.ls()
+print(adlsFileSystemClient.ls())
 
 with adlsFileSystemClient.open('mydat_2.csv', 'rb') as f:
     mydata = pd.read_csv(f) 
