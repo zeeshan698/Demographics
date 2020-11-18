@@ -332,10 +332,14 @@ else:
 
 # AKS deployment ****************************************************************************************
 from azureml.core.webservice import AksWebservice, Webservice
+from azureml.core.webservice import AksEndpoint
+from azureml.core.compute import AksCompute
+from azureml.core.compute import ComputeTarget
+
 print("AKS deployement ")
 AKS_DELOYMENT_SERVICE_NAME = "get-aks-dgraphics-restlink"
 AML_AKS_COMPUTE_NAME = "aks-amlcompute"
-aks_target = AksCompute(ws,AML_AKS_COMPUTE_NAME)
+aks_target = ComputeTarget(ws,AML_AKS_COMPUTE_NAME)
 namespace_name = "default"
 endpoint_name = AKS_DELOYMENT_SERVICE_NAME
 version_name = "version1"
