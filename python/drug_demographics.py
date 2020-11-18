@@ -374,7 +374,7 @@ else:
      print("**************************************")
      endpoint = AksEndpoint(
                     workspace=ws,
-                    name=AKS_DEPLOYMENT_SERVICE_NAME,
+                    name="aks-dgraphics1",
                   
      )
 
