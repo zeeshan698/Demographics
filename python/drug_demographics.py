@@ -126,7 +126,8 @@ graph = tree.plot_tree(decisiontree,
 pred = model.predict(X_test)
 check = (pred == y_test)
 sum(check)/len(check)
-
+from sklearn import metrics
+print("Accuracy for the test data = {0:.3f}".format(metrics.accuracy_score(y_test, pred)))
 
 # # Freeze the model
 
