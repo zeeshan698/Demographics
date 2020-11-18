@@ -373,8 +373,8 @@ else:
      print(" ")
      print("**************************************")
      endpoint = AksEndpoint(
-                    workspace = ws
-                    name = AKS_DEPLOYMENT_SERVICE_NAME,
+                    workspace=ws,
+                    name=AKS_DEPLOYMENT_SERVICE_NAME,
                   
      )
 
