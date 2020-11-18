@@ -7,4 +7,4 @@ scikit-learn==0.23.1
 seaborn==0.10.1
 ujson==1.35
 urllib3==1.25.9
-azure-storage-file-datalake=12.2.0
+azure-storage-file-datalake==12.2.0
