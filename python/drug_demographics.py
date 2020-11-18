@@ -378,7 +378,7 @@ else:
                   
      )
 
-     endpoint.update_version(version_name=endpoint.versions["versionb1].name,
+     endpoint.update_version(version_name=endpoint.versions["version1"].name,
                        description="updated version",
                        model = [model]                                     
      )
